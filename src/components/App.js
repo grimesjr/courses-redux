@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import HomePage from './Home/HomePage';
 import AboutPage from './About/AboutPage';
+import CoursesPage from './courses/CoursesPage';
 import Header from './common/Headers';
 import PageNotFound from './PageNotFound';
 
@@ -12,6 +13,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/courses" component={CoursesPage} />
         <Route component={PageNotFound} />
       </Switch>
     </div>
