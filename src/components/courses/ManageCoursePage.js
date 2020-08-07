@@ -17,6 +17,7 @@ function ManageCoursePage({
   loadAuthors,
   loadCourses,
   saveCourse,
+  history,
   ...props
 }) {
   const [course, setCourse] = useState({ ...props.course });
@@ -27,13 +28,15 @@ function ManageCoursePage({
       loadCourses().catch((error) => {
         alert('loading courses error' + error);
       });
+    } else {
+      setCourse({ ...props.course });
     }
     if (authors.length === 0) {
       loadAuthors().catch((error) => {
         alert('loading authors error' + error);
       });
     }
-  }, []);
+  }, [props.course]);
 
   //handleChange function for all input fields
   function handleChange(event) {
@@ -46,7 +49,9 @@ function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course);
+    saveCourse(course).then(() => {
+      history.push('/courses');
+    });
   }
 
   return (
@@ -67,12 +72,22 @@ ManageCoursePage.propTypes = {
   loadAuthors: PropTypes.func.isRequired,
   courses: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
+export function getCourseBySlug(courses, slug) {
+  return courses.find((course) => course.slug === slug) || null;
+}
+
 //courses -> array of courses with author name add to object
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
   return {
-    course: newCourse,
+    course,
     courses: state.courses,
     authors: state.authors,
   };
