@@ -69,7 +69,7 @@ function ManageCoursePage({
   ) : (
     <CourseForm
       course={course}
-      error={errors}
+      errors={errors}
       authors={authors}
       onChange={handleChange}
       onSave={handleSave}
