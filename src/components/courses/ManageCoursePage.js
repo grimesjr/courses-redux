@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 //...props, set any props we haven't destructed to props
 //can also alias course: initialCourse
-function ManageCoursePage({
+export function ManageCoursePage({
   courses,
   authors,
   loadAuthors,
